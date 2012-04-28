@@ -58,7 +58,6 @@ describe User do
 
   # associations
   it "have many *documents*" do
-    pending "documents doesn't exist ..."
     should have_many :documents
   end
   
