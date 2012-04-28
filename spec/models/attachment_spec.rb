@@ -24,9 +24,9 @@ describe Attachment do
   end
   
   # security and attributes
-  %w[ slave_document_id, master_document_id, slave_document_type, removable ].each do |column|
+  %w[ slave_document_id master_document_id slave_document_type removable ].each do |column|
     it "allow mass assigment of #{column}" do
-      should allow_mass_assignment_of column
+      should allow_mass_assignment_of column.to_sym
     end
   end
 end

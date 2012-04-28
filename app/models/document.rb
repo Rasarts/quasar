@@ -7,4 +7,8 @@ class Document < ActiveRecord::Base
   
   # associations
   belongs_to :creator
+  has_many :attachments, dependent: :destroy, foreign_key: :master_document_id
+  has_many :attachments, dependent: :destroy, foreign_key: :slave_document_id
+  has_many :slave_documents,  through: :attachments
+  has_many :master_documents, through: :attachments
 end

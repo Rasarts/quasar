@@ -17,17 +17,17 @@ describe Document do
   end
   
   it 'have many *attachments*' do
-    pending "attachments doesn't present yet"
+    #pending "attachments doesn't present yet"
     should have_many(:attachments).dependent :destroy
   end
   
   it 'have many *master_documents (documents)* through attachments' do
-    pending "attachments doesn't present yet"
+    #pending "attachments doesn't present yet"
     should have_many(:master_documents).through :attachments
   end
   
   it 'have many *slave_documents (documents)* through attachments' do
-    pending "attachments doesn't present yet"
+    #pending "attachments doesn't present yet"
     should have_many(:slave_documents).through :attachments
   end
   
