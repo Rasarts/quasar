@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120427185216) do
+ActiveRecord::Schema.define(:version => 20120428125158) do
+
+  create_table "attachments", :force => true do |t|
+    t.string  "slave_document_type",                    :null => false
+    t.boolean "removable",           :default => false, :null => false
+    t.string  "slave_document_id",                      :null => false
+    t.string  "master_document_id",                     :null => false
+  end
 
   create_table "documents", :force => true do |t|
     t.string   "title",       :default => "", :null => false
