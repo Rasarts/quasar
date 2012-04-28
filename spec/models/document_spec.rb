@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Document do
+  
   # validations
   it 'validates presence of title' do
     should validate_presence_of :title
@@ -11,16 +12,27 @@ describe Document do
   end
   
   # associations
-  it 'belong to *user*' do
+  it 'belong to *creator (user)*' do
     should belong_to :creator
   end
   
-  it 'belong to another, *master_document*' do
-    should belong_to :master_document
+  it 'have many *attachments*' do
+    should have_many(:attachments).dependent :destroy
   end
   
-  it 'have many *slave_documents*' do
-    should have_many :slave_documents
+  it 'have many *master_documents (documents)* through attachments' do
+    should have_many(:master_documents).through :attachments
+  end
+  
+  it 'have many *slave_documents (documents)* through attachments' do
+    should have_many(:slave_documents).through :attachments
+  end
+  
+  # security & attributes
+  %w[content creator_id description title].each do |column|
+    it "allow mass assignment for *#{column}*" do
+      should allow_mass_assignment_of column.to_sym
+    end
   end
   
 end
