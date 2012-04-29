@@ -32,6 +32,10 @@ describe Article do
   end
   
   # associations
+  it 'belongs to *creator (user)*' do
+    should belong_to :creator
+  end
+  
   it 'have many *attachment_links*' do
     should have_many(:attachment_links).dependent :destroy
   end
