@@ -8,6 +8,6 @@ class AttachmentLink < ActiveRecord::Base
   validates :master_type,      presence: true
 
   # associations
-  belongs_to :master,      class_name: 'Document'
-  belongs_to :attachment,  class_name: 'Document'
+  belongs_to :master,     polymorphic: true
+  belongs_to :attachment, polymorphic: true
 end

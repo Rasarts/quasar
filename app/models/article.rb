@@ -9,4 +9,9 @@ class Article < ActiveRecord::Base
   validates :status,     presence: true, inclusion: { in: STATUSES }
   validates :creator_id, presence: true
   
+  # associations
+  has_many :attachment_links, as: :master,     dependent: :destroy
+  has_many :attachment_links, as: :attachment, dependent: :destroy
+  has_many :attachments, through: :attachment_links
+  has_many :masters,     through: :attachment_links
 end
