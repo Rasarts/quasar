@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Document do
+  COLUMNS = %w[content creator_id description title]
   
   # validations
   it 'validates presence of title' do
@@ -16,23 +17,23 @@ describe Document do
     should belong_to :creator
   end
   
-  it 'have many *attachments*' do
+  it 'have many *attachment_links*' do
     #pending "attachments doesn't present yet"
-    should have_many(:attachments).dependent :destroy
+    should have_many(:attachment_links).dependent :destroy
   end
   
-  it 'have many *master_documents (documents)* through attachments' do
+  it 'have many *masters (documents)* through attachment_links' do
     #pending "attachments doesn't present yet"
-    should have_many(:master_documents).through :attachments
+    should have_many(:masters).through :attachment_links
   end
   
-  it 'have many *slave_documents (documents)* through attachments' do
+  it 'have many *attachments (documents)* through attachment_links' do
     #pending "attachments doesn't present yet"
-    should have_many(:slave_documents).through :attachments
+    should have_many(:attachments).through :attachment_links
   end
   
   # security & attributes
-  %w[content creator_id description title].each do |column|
+  COLUMNS.each do |column|
     it "allow mass assignment for *#{column}*" do
       should allow_mass_assignment_of column.to_sym
     end
