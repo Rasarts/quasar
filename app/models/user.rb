@@ -17,9 +17,6 @@ class User < ActiveRecord::Base
   
   attr_accessor :login
 
-  # associations
-  has_many :documents, foreign_key: :creator_id
-
   
   def full_name
     "#{first_name} #{last_name}"

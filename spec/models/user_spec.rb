@@ -60,7 +60,7 @@ describe User do
 
   # associations
   it "have many *documents*" do
-    should have_many :documents
+    pending '...'
   end
   
   # helpers
