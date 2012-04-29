@@ -24,10 +24,11 @@ ActiveRecord::Schema.define(:version => 20120428232558) do
   end
 
   create_table "attachments", :force => true do |t|
-    t.string  "slave_document_type",                    :null => false
-    t.boolean "removable",           :default => false, :null => false
-    t.string  "slave_document_id",                      :null => false
-    t.string  "master_document_id",                     :null => false
+    t.string  "slave_document_type",                     :null => false
+    t.string  "master_document_type",                    :null => false
+    t.boolean "removable",            :default => false, :null => false
+    t.string  "slave_document_id",                       :null => false
+    t.string  "master_document_id",                      :null => false
   end
 
   create_table "documents", :force => true do |t|

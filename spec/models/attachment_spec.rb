@@ -13,6 +13,10 @@ describe Attachment do
   it 'validate presence of slave_document_type' do
     should validate_presence_of :slave_document_type
   end
+  
+  it 'validate presence of master_document_type' do
+    should validate_presence_of :master_document_type
+  end
 
   # asssociations
   it 'belong to *master_document*' do
