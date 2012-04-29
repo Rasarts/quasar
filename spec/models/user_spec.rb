@@ -59,8 +59,10 @@ describe User do
   end
 
   # associations
-  it "have many *documents*" do
-    pending '...'
+  DOCTYPES.each do |document|
+    it "have many *#{document.underscore}*" do
+      have_many document.underscore.to_sym
+    end
   end
   
   # helpers

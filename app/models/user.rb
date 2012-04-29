@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
   
   attr_accessor :login
 
+  # associations
+  DOCTYPES.each do |document|
+    has_many document.underscore, foreign_key: :creator_id
+  end
   
   def full_name
     "#{first_name} #{last_name}"
