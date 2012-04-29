@@ -5,62 +5,62 @@ describe User do
 
   # validations
   ROLES.each do |role|
-    it "allow value #{role} for *role*" do
+    it "allows value #{role} for *role*" do
       should allow_value(role).for :role
     end
   end
   
-  it "not allow value 'some value' for *role*" do
+  it "don't allows value 'some value' for *role*" do
     should_not allow_value('some value').for :role
   end
   
-  it "validate presence of *nickname*" do 
+  it "validates presence of *nickname*" do 
     should validate_presence_of :nickname
   end
   
-  it "validate presence of *email*" do
+  it "validates presence of *email*" do
     should validate_presence_of :email
   end
   
-  it "allow value 'real_email@email.com' for *email*" do 
+  it "allows value 'real_email@email.com' for *email*" do 
     should allow_value('real_email@email.com').for :email
   end
   
-  it "not allow value 'fakemail' for *email*" do
+  it "not allows value 'fakemail' for *email*" do
     should_not allow_value("fakemail").for :email
   end
   
-  it "ensure length of *nickname* is at least 3 chars and is at most 20 chars" do
+  it "ensures length of *nickname* is at least 3 chars and is at most 20 chars" do
     should ensure_length_of(:nickname).is_at_least(3).is_at_most 20
   end
   
-  it "ensure length of *nickname* is at least 2 chars and is at most 20 chars" do
+  it "ensures length of *nickname* is at least 2 chars and is at most 20 chars" do
     should ensure_length_of(:first_name).is_at_least(2).is_at_most 20
   end
     
-  it "ensure length of *nickname* is at least 2 chars and is at most 20 chars" do
+  it "ensures length of *nickname* is at least 2 chars and is at most 20 chars" do
     should ensure_length_of(:last_name).is_at_least(2).is_at_most 20
   end 
 
   # security
-  it "allow mass assignment of *role*" do
+  it "allows mass assignment of *role*" do
     should allow_mass_assignment_of :role
   end
-  it "allow mass assignment of *role*" do
+  it "allows mass assignment of *role*" do
     should allow_mass_assignment_of :nickname
   end
   
-  it "allow mass assignment of *first_name*" do
+  it "allows mass assignment of *first_name*" do
     should allow_mass_assignment_of :first_name
   end
   
-  it "allow mass assignment of *last_name*" do
+  it "allows mass assignment of *last_name*" do
     should allow_mass_assignment_of :last_name
   end
 
   # associations
   DOCTYPES.each do |document|
-    it "have many *#{document.underscore}*" do
+    it "has many *#{document.underscore}*" do
       have_many document.underscore.to_sym
     end
   end
