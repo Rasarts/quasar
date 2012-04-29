@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :attachment do
-    slave_document
-    master_document
+    attachment
+    master
     
     removable false
   end

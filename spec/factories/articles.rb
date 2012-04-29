@@ -5,6 +5,6 @@ FactoryGirl.define do
     content     "MyLongLongLongText"
     status      "in_work"
     
-    user
+    creator
   end
 end
