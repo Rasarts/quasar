@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   validates :first_name, length: { minimum: 2, maximum: 20 }
   validates :last_name,  length: { minimum: 2, maximum: 20 }
   validates :role, inclusion: { in: ROLES }
+  
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -15,6 +16,7 @@ class User < ActiveRecord::Base
   attr_accessible :nickname, :first_name, :last_name, :role, :email, :password, :password_confirmation, :remember_me
   
   attr_accessor :login
+
   
   def full_name
     "#{first_name} #{last_name}"

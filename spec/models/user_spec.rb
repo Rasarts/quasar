@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 describe User do
+  ROLES = %w[ admin moderator reader ]
+
   # validations
-  %w[ admin moderator reader ].each do |role_name|
-    it "allow value #{role_name} for *role*" do
-      should allow_value(role_name).for :role
+  ROLES.each do |role|
+    it "allow value #{role} for *role*" do
+      should allow_value(role).for :role
     end
   end
   
@@ -58,8 +60,7 @@ describe User do
 
   # associations
   it "have many *documents*" do
-    pending "documents doesn't exist ..."
-    should have_many :documents
+    pending '...'
   end
   
   # helpers

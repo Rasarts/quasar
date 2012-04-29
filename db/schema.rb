@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120426214904) do
+ActiveRecord::Schema.define(:version => 20120428232558) do
+
+  create_table "articles", :force => true do |t|
+    t.string   "title",                              :null => false
+    t.text     "description", :default => "",        :null => false
+    t.text     "content",                            :null => false
+    t.string   "status",      :default => "in_work", :null => false
+    t.integer  "creator_id",                         :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+  end
+
+  create_table "attachment_links", :force => true do |t|
+    t.string  "attachment_type",                    :null => false
+    t.string  "master_type",                        :null => false
+    t.boolean "removable",       :default => false, :null => false
+    t.string  "attachment_id",                      :null => false
+    t.string  "master_id",                          :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "nickname",                                     :null => false
