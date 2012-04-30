@@ -59,9 +59,9 @@ describe User do
   end
 
   # associations
-  DOCTYPES.each do |document|
-    it "has many *#{document.underscore}*" do
-      have_many document.underscore.to_sym
+  RESTYPES.each do |resource|
+    it "has many *#{resource.underscore}*" do
+      have_many resource.underscore.to_sym
     end
   end
   

@@ -64,7 +64,7 @@ describe Article do
     end
 
     describe 'Master Article' do
-      it 'can attach documents through #attach method' do
+      it 'can attach resources through #attach method' do
         article_3 = FactoryGirl.create :article, title: 'Third article'
 
         article.attach article_3
@@ -83,8 +83,8 @@ describe Article do
         article.has_attachments?.should be_true
       end
 
-      it 'responds to #has_attachments?(only: :some_documents)' do
-        article.has_attachments?(only: :some_documents).should be_false
+      it 'responds to #has_attachments?(only: :some_resources)' do
+        article.has_attachments?(only: :some_resources).should be_false
       end
 
       it 'responds to #has_attachments?(except: :articles)' do
@@ -105,7 +105,7 @@ describe Article do
     end
 
     describe 'Attached Article' do
-      it 'responds to #master_documents' do
+      it 'responds to #master_resources' do
         article_2.master_documents.should have(1).master_documents
       end
 
@@ -113,8 +113,8 @@ describe Article do
         article_2.master(:articles).should have(1).articles
       end
 
-      it 'responds to #master(only: :some_documents)' do
-        article_2.master(only: :some_documents).should have(0).articles
+      it 'responds to #master(only: :some_resources)' do
+        article_2.master(only: :some_resources).should have(0).articles
       end
 
       it 'responds to #master(except: :articles)' do
@@ -129,8 +129,8 @@ describe Article do
         article_2.has_master?(:articles).should be_true
       end
 
-      it 'responds to #has_master?(only: :some_documents)' do
-        article_2.master(only: :some_documents).should be_false
+      it 'responds to #has_master?(only: :some_resources)' do
+        article_2.master(only: :some_resources).should be_false
       end
 
       it 'responds to #has_master?(except: :articles)' do
