@@ -8,6 +8,7 @@ gem 'slim-rails'
 gem 'devise'
 gem 'cancan'
 gem 'carrierwave'
+gem 'ancestry'
 
 group :test, :development do
   gem 'rspec'

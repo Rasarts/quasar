@@ -5,6 +5,6 @@ FactoryGirl.define do
     content     "MyLongLongLongText"
     status      "in_work"
     
-    creator
+    association :creator, factory: :user
   end
 end
