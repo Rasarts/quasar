@@ -14,13 +14,15 @@
 ActiveRecord::Schema.define(:version => 20120428232558) do
 
   create_table "articles", :force => true do |t|
-    t.string   "title",                              :null => false
-    t.text     "description", :default => "",        :null => false
-    t.text     "content",                            :null => false
-    t.string   "status",      :default => "in_work", :null => false
-    t.integer  "creator_id",                         :null => false
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.string   "title",                                    :null => false
+    t.text     "description",       :default => "",        :null => false
+    t.text     "content",                                  :null => false
+    t.string   "status",            :default => "in_work", :null => false
+    t.integer  "creator_id",                               :null => false
+    t.integer  "masters_count",     :default => 0,         :null => false
+    t.integer  "attachments_count", :default => 0,         :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
   create_table "attachment_links", :force => true do |t|
