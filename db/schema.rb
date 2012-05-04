@@ -27,8 +27,17 @@ ActiveRecord::Schema.define(:version => 20120428232558) do
     t.string  "attachment_type",                    :null => false
     t.string  "master_type",                        :null => false
     t.boolean "removable",       :default => false, :null => false
-    t.string  "attachment_id",                      :null => false
-    t.string  "master_id",                          :null => false
+    t.integer "attachment_id",                      :null => false
+    t.integer "master_id",                          :null => false
+  end
+
+  create_table "documents", :force => true do |t|
+    t.string   "title",       :default => "", :null => false
+    t.text     "description", :default => "", :null => false
+    t.text     "content",     :default => "", :null => false
+    t.integer  "creator_id",                  :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   create_table "users", :force => true do |t|
