@@ -11,7 +11,20 @@ class Article < ActiveRecord::Base
   
   # associations
   belongs_to :creator, class_name: 'User'
-  
+
+
+  # callbacks
+
+  after_destroy do
+    # for masters
+    decrement_attachments_count_on_masters
+    destroy_attachment_links
+
+    # for attachments
+    decrement_masters_count_on_attachments
+    destroy_all_master_links
+  end
+
   # get list of associated attachment_links
   def attachment_links()
     @attachment_links ||= AttachmentLink.where("master_id = ? AND master_type = ?", id,  class_name)
@@ -42,29 +55,31 @@ class Article < ActiveRecord::Base
   end
   
   # get hash of master_resources
-  def master_resources
-    @master_resources ||= {}
+  def masters
+    @masters ||= {}
     
-    if @master_resources.empty?
+    if @masters.empty?
       master_links.each do |master_link|
         master_class_name = master_link.master_type
         master_class = master_class_name.constantize
-        @master_resources[master_class_name] ||= []
-        @master_resources[master_class_name] << master_class.where(id: master_link.master_id).limit(1)
+        @masters[master_class_name] ||= []
+        @masters[master_class_name] << master_class.where(id: master_link.master_id).limit(1)
       end
     end
 
-    return @master_resources
+    return @masters
   end
 
   def master(master_class)
-    master_resources[master_class.to_s.singularize.classify]
+    masters[master_class.to_s.singularize.classify]
   end
   
   # attaches attachment to article
   def attach(attachment)
     new_attlink(attachment).save
-    reload_attachments_with attachment  
+    increment_attachments_count
+    reload_attachments_with attachment
+    attachment.update_attribute(:masters_count, attachment.masters_count + 1)
   end
 
   # create new AttributeLink record with current record as master but don't save it
@@ -79,7 +94,7 @@ class Article < ActiveRecord::Base
       end
     end
   end
-
+  
   def has_attachments?
     attachments.present?
   end
@@ -87,7 +102,8 @@ class Article < ActiveRecord::Base
   def class_name
     self.class.to_s
   end
-
+  
+  # returns attachments of <attclass> type
   def attached(attclass)
     attachments[attclass.to_s.classify]
   end
@@ -108,6 +124,39 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def decrement_attachments_count_on_masters
+    masters.values.flatten.each { |mstr| mstr.decrement_attachments_count }
+  end
+
+  def decrement_masters_count_on_attachments
+    attachments.values.flatten.each { |att| att.decrement_masters_count }
+  end
+
+  def increment_attachments_count
+    update_attribute(:attachments_count, attachments_count + 1)
+  end
+
+  def decrement_attachments_count
+    update_attribute(:attachments_count, attachments_count - 1)
+  end
+
+  def increment_masters_count
+    update_attribute(:masters_count, masters_count + 1)
+  end
+
+  def decrement_masters_count
+    update_attribute(:masters_count, masters_count - 1)
+  end
+
+  def destroy_attachment_links
+    attachment_links.destroy_all
+  end
+  
+  def destroy_all_master_links
+    master_links.destroy_all
+  end
+  
+
 
 
   private
@@ -120,4 +169,5 @@ class Article < ActiveRecord::Base
       attachments[attachment.class.to_s] << attachment
     end
   end
+
 end

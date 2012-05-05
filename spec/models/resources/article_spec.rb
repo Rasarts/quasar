@@ -45,9 +45,10 @@ describe Article do
 
   describe 'attachments and masters' do
 
-    before :all do
+    before :each do
       @article   = FactoryGirl.create :article
       @article_2 = FactoryGirl.create :article, title: 'Second article'
+      @article_3 = FactoryGirl.create :article, title: 'Third article'
       @article.attach @article_2
     end
 
@@ -65,9 +66,7 @@ describe Article do
       end
 
       it 'can attach resources through #attach method' do
-        article_3 = FactoryGirl.create :article, title: 'Third article'
-
-        @article.attach article_3
+        @article.attach @article_3
         @article.attachments["Article"].should have(3).attachments
       end
 
@@ -97,21 +96,31 @@ describe Article do
 
       it 'responds to #articles with list of attached articles' do
         pending
-        @article.articles.should have(3).attachment
+        @article.articles.should have(2).attachment
       end
 
       it 'responds to #attached(:articles) with list of attached articles' do
-        @article.attached(:articles).should have(3).articles
+        @article.attached(:articles).should have(2).articles
       end
 
       it 'responds to #has_attached(:articles)?' do
         @article.has_attached?(:articles).should be_true
       end
+
+      it 'has attachments count' do
+        @article.attach @article_3
+        @article.attachments_count.should == 2
+      end
+
+      it 'after destroy destroys all associated attachment links' do
+        @article.destroy
+        @article.attachment_links.size.should == 0
+      end
     end
 
     describe 'Attached Article' do
-      it 'responds to #master_resources' do
-        @article_2.master_resources.should have(1).master_resource
+      it 'responds to #masters' do
+        @article_2.masters.should have(1).master_resource
       end
 
       it 'responds to #master(:articles)' do
@@ -145,6 +154,16 @@ describe Article do
       it 'responds to #has_master?(except: :articles)' do
         pending
         @article_2.master(except: :articles).should be_false
+      end
+
+      it 'has masters count' do
+        @article_3.attach @article_2
+        @article_2.masters_count.should == 2
+      end
+
+      it 'after destroy destroys all associated master links' do
+        @article_2.destroy
+        @article_2.master_links.size.should == 0
       end
 
     end
