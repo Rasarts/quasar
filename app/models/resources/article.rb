@@ -25,6 +25,12 @@ class Article < ActiveRecord::Base
     destroy_all_master_links
   end
 
+
+  # some helpers
+  def name
+    title
+  end
+
   # get list of associated attachment_links
   def attachment_links()
     @attachment_links ||= AttachmentLink.where("master_id = ? AND master_type = ?", id,  class_name)
@@ -76,10 +82,11 @@ class Article < ActiveRecord::Base
   
   # attaches attachment to article
   def attach(attachment)
-    new_attlink(attachment).save
-    increment_attachments_count
-    reload_attachments_with attachment
-    attachment.update_attribute(:masters_count, attachment.masters_count + 1)
+    if new_attlink(attachment).save
+      increment_attachments_count
+      reload_attachments_with attachment
+      attachment.increment_masters_count
+    end
   end
 
   # create new AttributeLink record with current record as master but don't save it
@@ -148,17 +155,6 @@ class Article < ActiveRecord::Base
     update_attribute(:masters_count, masters_count - 1)
   end
 
-  def destroy_attachment_links
-    attachment_links.destroy_all
-  end
-  
-  def destroy_all_master_links
-    master_links.destroy_all
-  end
-  
-
-
-
   private
   
   # add attachment to @attachments
@@ -168,6 +164,14 @@ class Article < ActiveRecord::Base
     unless attachments[attachment.class.to_s].include? attachment
       attachments[attachment.class.to_s] << attachment
     end
+  end
+
+  def destroy_attachment_links
+    attachment_links.destroy_all
+  end
+  
+  def destroy_all_master_links
+    master_links.destroy_all
   end
 
 end

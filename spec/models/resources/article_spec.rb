@@ -43,6 +43,8 @@ describe Article do
     end
   end
 
+
+
   describe 'attachments and masters' do
 
     before :each do
@@ -50,6 +52,11 @@ describe Article do
       @article_2 = FactoryGirl.create :article, title: 'Second article'
       @article_3 = FactoryGirl.create :article, title: 'Third article'
       @article.attach @article_2
+    end
+
+    # some helpers
+    it 'responds to #name' do
+      @article.name.should == @article.title
     end
 
     describe 'Master Article' do
