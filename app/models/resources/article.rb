@@ -33,11 +33,11 @@ class Article < ActiveRecord::Base
 
   # get list of associated attachment_links
   def attachment_links()
-    @attachment_links ||= AttachmentLink.where("master_id = ? AND master_type = ?", id,  class_name)
+    @attachment_links ||= AttachmentLink.where("master_id = ? AND master_type = ?", id,  class_name).limit(attachments_count)
   end
 
   def master_links()
-    @master_links ||= AttachmentLink.where("attachment_id = ? AND attachment_type = ?", id,  class_name)
+    @master_links ||= AttachmentLink.where("attachment_id = ? AND attachment_type = ?", id,  class_name).limit(masters_count)
   end
   
   # get hash of attachments { "AttachmentClass" => [...] }
